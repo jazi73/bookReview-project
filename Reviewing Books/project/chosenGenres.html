@@ -1,0 +1,333 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  <title>Chosen Genres</title>
+  <link rel="stylesheet" type="text/css" href="project.css">
+  <style>
+
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 30px;
+      }
+  
+      h2 {
+        color: #3a394c;
+      }
+  
+      .book-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+        justify-items: center;
+        margin-top: 40px;
+      }
+  
+      .book {
+        background: white;
+        border-radius: 10px;
+        width: 250px;
+        padding: 15px;
+        box-shadow: 0 0 8px rgba(0,0,0,0.15);
+        text-align: center;
+      }
+  
+      .book img {
+        width: 120px;
+        height: 180px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+      }
+  
+      .book h3 {
+        margin: 5px 0;
+        color: #3a394c;
+      }
+  
+      .book p {
+        margin: 5px 0;
+      }
+  
+      .book button {
+        background-color: #3a394c;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+  
+      .book button:hover {
+        background-color: #1c1c29;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Choose A Book To Review</h2>
+  
+    <div id="bookGrid" class="book-container"></div>
+  
+  
+    <script>
+      // assciatuve mulitidimnsional array
+      const booksByGenre = {
+        "Fantasy": [
+          {
+            title: "The Prison Healer",
+            author: "Lynette Noni",
+            description: "A young healer fights to survive in a deadly prison while uncovering dark secrets.",
+            cover: "healer.JPG"
+          },
+          {
+            title: "Shatter Me",
+            author: "Tahereh Mafi",
+            description: "A girl with a lethal touch struggles to control her power in a broken world.",
+            cover: "ShatterMe.jpg"
+          },
+          {
+            title: "Once Upon a Broken Heart",
+            author: "Stephanie Garber",
+            description: "A magical bargain leads to love, curses, and betrayal.",
+            cover: "heart.jpg"
+          },
+          {
+            title: "Harry Potter",
+            author: "J.K. Rowling",
+            description: "A boy discovers he is a wizard and attends a magical school.",
+            cover: "harryPotter.jpg"
+          },
+          {
+            title: "Defy The Night",
+            author: "Brigid Kemmerer",
+            description: "A rebellion rises against a cruel kingdom.",
+            cover: "DefyTheNight.jpg"
+          },
+          {
+            title: "Percy Jackson",
+            author: "Rick Riordan",
+            description: "A demigod discovers his powers and battles mythological monsters.",
+            cover: "percy.jpg"
+          }
+        ],
+    
+        "Romance": [
+          {
+            title: "I Hope This Doesn't Find You",
+            author: "Ann Liang",
+            description: "A heartfelt story about love and misunderstandings.",
+            cover: "findU.jpg"
+          },
+          {
+            title: "Picking Daisies on Sundays",
+            author: "Liana Cincotti",
+            description: "A gentle romance about healing and second chances.",
+            cover: "daisies.jpg"
+          },
+          {
+            title: "Don't Be In Love",
+            author: "Unknown",
+            description: "A complicated love story full of emotions.",
+            cover: "don'tBeinLove.jpg"
+          },
+          {
+            title: "The Cheat Sheet",
+            author: "Sarah Adams",
+            description: "Fake dating turns into something real.",
+            cover: "cheatSheet.jpg"
+          },
+          {
+            title: "Love & Gelato",
+            author: "Jenna Evans Welch",
+            description: "A summer in Italy changes everything.",
+            cover: "gelato.jpg"
+          },
+          {
+            title: "Nothing Like the Movies",
+            author: "Lynn Painter",
+            description: "Romantic expectations clash with reality.",
+            cover: "nothing.jpg"
+          }
+        ],
+    
+        "Manga": [
+          {
+            title: "Kuroko No Basket",
+            author: "Tadatoshi Fujimaki",
+            description: "High school basketball with intense rivalries.",
+            cover: "basket.jpg"
+          },
+          {
+            title: "Ao Haru Ride",
+            author: "Io Sakisaka",
+            description: "A touching high school romance.",
+            cover: "haru.jpg"
+          },
+          {
+            title: "My Hero Academia",
+            author: "Kohei Horikoshi",
+            description: "A world where heroes are trained to fight villains.",
+            cover: "hero.jpg"
+          },
+          {
+            title: "Spy Family",
+            author: "Tatsuya Endo",
+            description: "A spy creates a fake family for a mission.",
+            cover: "spy.jpg"
+          },
+          {
+            title: "Yona of the Dawn",
+            author: "Mizuho Kusanagi",
+            description: "A princess becomes a warrior.",
+            cover: "yona.jpg"
+          },
+          {
+            title: "Haikyu",
+            author: "Haruichi Furudate",
+            description: "Volleyball, teamwork, and determination.",
+            cover: "haikyu.jpg"
+          }
+        ],
+    
+        "Mystery": [
+          {
+            title: "All In",
+            author: "Jennifer Lynn Barnes",
+            description: "High-stakes mystery involving deception.",
+            cover: "Allin.jpg"
+          },
+          {
+            title: "Good Girl Bad Blood",
+            author: "Holly Jackson",
+            description: "A true-crime investigation gone wrong.",
+            cover: "badBlood.jpg"
+          },
+          {
+            title: "Killer Instinct",
+            author: "Jennifer Lynn Barnes",
+            description: "Profilers hunt dangerous criminals.",
+            cover: "killer.jpg"
+          },
+          {
+            title: "A Good Girl's Guide to Murder",
+            author: "Holly Jackson",
+            description: "A student investigates a closed murder case.",
+            cover: "murder.jpg"
+          },
+          {
+            title: "The Inheritance Games",
+            author: "Jennifer Lynn Barnes",
+            description: "A puzzle-filled mystery involving inheritance.",
+            cover: "game.jpg"
+          },
+          {
+            title: "The Naturals",
+            author: "Jennifer Lynn Barnes",
+            description: "Teen profilers solve cold cases.",
+            cover: "naturals.jpg"
+          }
+        ],
+    
+        "Fiction": [
+          {
+            title: "If Cats Disappeared From The World",
+            author: "Genki Kawamura",
+            description: "A man makes deals that erase things from the world.",
+            cover: "cats.jpg"
+          },
+          {
+            title: "Before the Coffee Gets Cold",
+            author: "Toshikazu Kawaguchi",
+            description: "A café where you can travel in time.",
+            cover: "coffee.jpg"
+          },
+          {
+            title: "Before Your Memory Fades",
+            author: "Toshikazu Kawaguchi",
+            description: "Another emotional time-travel story.",
+            cover: "memory.jpg"
+          },
+          {
+            title: "The Midnight Library",
+            author: "Matt Haig",
+            description: "Exploring lives that could have been.",
+            cover: "midnight.jpg"
+          },
+          {
+            title: "Firefly Lane",
+            author: "Kristin Hannah",
+            description: "A lifelong friendship through decades.",
+            cover: "fireFlies.jpg"
+          },
+          {
+            title: "I'll Be Right There",
+            author: "Kyung-Sook Shin",
+            description: "A reflective and emotional journey.",
+            cover: "beThere.jpg"
+          }
+        ]
+      };
+    
+  
+      
+      const params = new URLSearchParams(window.location.search);//reads everything after ? in the url
+      const selectedGenres = params.get("genres") ? params.get("genres").split(",") : [];// split turns selcted genres into an array
+  
+      const grid = document.getElementById("bookGrid");//thi is for diplaying the books from the chosen genres
+      let displayedBooks = [];//store the books that should appear on the page
+  
+      // If 1 genre, shows 6 books; if 2 genres shows 3 each
+      if (selectedGenres.length === 1) {
+        displayedBooks = booksByGenre[selectedGenres[0]];
+      } else if (selectedGenres.length === 2) {
+        displayedBooks = [
+          ...booksByGenre[selectedGenres[0]].slice(0, 3),//take only the first 3 books
+          ...booksByGenre[selectedGenres[1]].slice(0, 3)
+        ];
+      }// if the user chose 2 gnres ,take 3 books from each and combines them into one array of 6 books
+  
+      // Show the books in 2 rows (3 per row)
+
+//loops through each book
+grid.innerHTML = displayedBooks.map((book, index) => `
+  <div class="book">
+    <img src="${book.cover}" alt="${book.title}">
+    <h3>${book.title}</h3>     
+    <button class="review-btn" data-index="${index}">Review</button>
+  </div>
+`).join("");//joins everything into one HTML string
+// the index stores the book’s position (0, 1, 2,)
+//grid.innerhtml displays all books on the page
+
+
+const buttons = document.querySelectorAll(".review-btn");//Selects all Review buttons that were just created
+
+buttons.forEach(btn => {//Adds a click event to each button.
+  btn.addEventListener("click", () => {                        //(gets the number stored in data index)
+    const book = displayedBooks[btn.dataset.index];// we have many buttons and each button is for a book dataset connects the button to correct book 
+    //Go to review page with book data
+    // the page URL, read data from the url.
+    window.location.href =
+      "review.html" +
+      "?cover=" + encodeURIComponent(book.cover) +//makes text safe for urls
+      "&title=" + encodeURIComponent(book.title) +
+      "&author=" + encodeURIComponent(book.author) +
+      "&desc=" + encodeURIComponent(book.description);
+  });
+});
+
+
+
+
+</script>
+
+   
+  </body>
+  </html>

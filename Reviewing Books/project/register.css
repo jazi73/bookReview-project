@@ -1,0 +1,31 @@
+
+
+
+body{ /*element selctor for styling the body*/
+  font-family: Arial, sans-serif;
+  font-size: smaller;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+  url('book.JPG'); /* darken image */
+}
+
+form {/*element selctor for styling the form*/
+    position: absolute;
+    border: 7px solid black; /*create thick black border*/
+     background-color: white;
+     width: 400px;/* width of the form*/
+ height: 270px;/* width of the form*/
+ left: 500px;/* moves the form from the left*/
+ top: 250px;/* moves the form from the top*/
+ 
+ text-align: center; /* center the  text in the form */
+ }
+
+ .log{
+  margin-top: 30px;
+ }
+  
+  a {
+    color: darkmagenta;
+    text-decoration: none; /* removes underline */
+   
+  }

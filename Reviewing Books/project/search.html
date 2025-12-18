@@ -1,0 +1,230 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="project.css"> <!--links to css file for styling-->
+
+    <title>Search Books</title>
+
+    <style>
+        body {
+          
+            margin: 0px; /* remove default marging */
+            padding: 0px;/* remove default padding */
+           
+        }
+
+        .search {
+            display: flex; 
+            align-items: center;/* center contant vertically */
+            justify-content: center;/* center contant horizantally  */
+        }
+
+        .search-bar {
+            width: 400px;
+            max-width: 700px;
+            display: flex;
+            align-items: center;
+            margin-top: 30px;
+            border-radius: 50px;
+            padding: 8px 16px;
+            background: rgba(89, 80, 80, 0.2);
+        }
+
+        .search-bar input {
+            background: transparent;
+            flex: 1; /*take avilable space */
+            border: 0;
+            outline: none;
+            padding: 12px 10px;
+            font-size: 16px;
+            color: #3a394c;
+        }
+
+        ::placeholder {
+            color: rgb(121, 111, 97);
+        }
+
+        /* Book display box */
+        .book {
+            margin-top: 40px;
+            text-align: center;
+            background: white;
+            border-radius: 10px;
+            width: 320px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .book img {
+            width: 120px;
+            height: 180px;
+            border-radius: 5px;
+        }
+
+        .book h3 {
+            margin: 10px 0 5px 0;
+        }
+
+        .book p {
+            margin: 5px 0;
+        }
+
+        .book button {
+            margin-top: 10px;
+            background-color: #3a394c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .book button:hover {
+            background-color: #1c1c29;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="search"><!--onsubmit is an event handler.
+
+        It runs JavaScript code whenever the user clicks the submit button (or presses Enter inside the input).-->
+        <!--submitting a form reloads the page-->
+        <form class="search-bar" onsubmit="event.preventDefault(); searchBook();">      <!--event handler when user clicks keys to write-->
+            <input id="searchInput" type="text" placeholder="Search title, author, isbn" onkeyup="searchBook()" autocomplete="off">
+        </form>
+    </div>
+
+    <div id="bookResult"></div><!--display book-->
+
+
+       
+    <div id="bookResult"></div>
+
+
+    
+      <script>
+        
+document.addEventListener("DOMContentLoaded", () => {
+
+
+const booksByGenre = {
+  "Fantasy": [
+    { title: "The Prison Healer", author: "Lynette Noni", description: "A young healer fights to survive in a deadly prison while uncovering dark secrets.", cover: "healer.JPG" },
+    { title: "Shatter Me", author: "Tahereh Mafi", description: "A girl with a lethal touch struggles to control her power in a broken world.", cover: "ShatterMe.jpg" },
+    { title: "Once Upon a Broken Heart", author: "Stephanie Garber", description: "A magical bargain leads to love, curses, and betrayal.", cover: "heart.jpg" },
+    { title: "Harry Potter", author: "J.K. Rowling", description: "A boy discovers he is a wizard and attends a magical school.", cover: "harryPotter.jpg" },
+    { title: "Defy The Night", author: "Brigid Kemmerer", description: "A rebellion rises against a cruel kingdom.", cover: "DefyTheNight.jpg" },
+    { title: "Percy Jackson", author: "Rick Riordan", description: "A demigod discovers his powers and battles mythological monsters.", cover: "percy.jpg" }
+  ],
+  "Romance": [
+    { title: "I Hope This Doesn't Find You", author: "Ann Liang", description: "A heartfelt story about love and misunderstandings.", cover: "findU.jpg" },
+    { title: "Picking Daisies on Sundays", author: "Liana Cincotti", description: "A gentle romance about healing and second chances.", cover: "daisies.jpg" },
+    { title: "Don't Be In Love", author: "Unknown", description: "A complicated love story full of emotions.", cover: "don'tBeinLove.jpg" },
+    { title: "The Cheat Sheet", author: "Sarah Adams", description: "Fake dating turns into something real.", cover: "cheatSheet.jpg" },
+    { title: "Love & Gelato", author: "Jenna Evans Welch", description: "A summer in Italy changes everything.", cover: "gelato.jpg" },
+    { title: "Nothing Like the Movies", author: "Lynn Painter", description: "Romantic expectations clash with reality.", cover: "nothing.jpg" }
+  ],
+  "Manga": [
+    { title: "Kuroko No Basket", author: "Tadatoshi Fujimaki", description: "High school basketball with intense rivalries.", cover: "basket.jpg" },
+    { title: "Ao Haru Ride", author: "Io Sakisaka", description: "A touching high school romance.", cover: "haru.jpg" },
+    { title: "My Hero Academia", author: "Kohei Horikoshi", description: "A world where heroes are trained to fight villains.", cover: "hero.jpg" },
+    { title: "Spy Family", author: "Tatsuya Endo", description: "A spy creates a fake family for a mission.", cover: "spy.jpg" },
+    { title: "Yona of the Dawn", author: "Mizuho Kusanagi", description: "A princess becomes a warrior.", cover: "yona.jpg" },
+    { title: "Haikyu", author: "Haruichi Furudate", description: "Volleyball, teamwork, and determination.", cover: "haikyu.jpg" }
+  ],
+  "Mystery": [
+    { title: "All In", author: "Jennifer Lynn Barnes", description: "High-stakes mystery involving deception.", cover: "Allin.jpg" },
+    { title: "Good Girl Bad Blood", author: "Holly Jackson", description: "A true-crime investigation gone wrong.", cover: "badBlood.jpg" },
+    { title: "Killer Instinct", author: "Jennifer Lynn Barnes", description: "Profilers hunt dangerous criminals.", cover: "killer.jpg" },
+    { title: "A Good Girl's Guide to Murder", author: "Holly Jackson", description: "A student investigates a closed murder case.", cover: "murder.jpg" },
+    { title: "The Inheritance Games", author: "Jennifer Lynn Barnes", description: "A puzzle-filled mystery involving inheritance.", cover: "game.jpg" },
+    { title: "The Naturals", author: "Jennifer Lynn Barnes", description: "Teen profilers solve cold cases.", cover: "naturals.jpg" }
+  ],
+  "Fiction": [
+    { title: "If Cats Disappeared From The World", author: "Genki Kawamura", description: "A man makes deals that erase things from the world.", cover: "cats.jpg" },
+    { title: "Before the Coffee Gets Cold", author: "Toshikazu Kawaguchi", description: "A café where you can travel in time.", cover: "coffee.jpg" },
+    { title: "Before Your Memory Fades", author: "Toshikazu Kawaguchi", description: "Another emotional time-travel story.", cover: "memory.jpg" },
+    { title: "The Midnight Library", author: "Matt Haig", description: "Exploring lives that could have been.", cover: "midnight.jpg" },
+    { title: "Firefly Lane", author: "Kristin Hannah", description: "A lifelong friendship through decades.", cover: "fireFlies.jpg" },
+    { title: "I'll Be Right There", author: "Kyung-Sook Shin", description: "A reflective and emotional journey.", cover: "beThere.jpg" }
+  ]
+};
+
+// Flatten all books for searching
+const allBooksArray = Object.values(booksByGenre).flat();//⭐️ takes the values of the arrays and merge them into one array using flat function 
+//the reason why is that it's easier to search for books in general not genre by genre
+
+
+// Elements
+const searchInput = document.getElementById("searchInput");
+const result = document.getElementById("bookResult");
+
+// Function to render books
+function noBooks(books) {
+  if (books.length === 0) {
+    result.innerHTML = "<p>No books found.</p>";
+    return;
+  }
+  
+  //this takes books array loops throuh all of them and converts them into HTML 
+  // for each books this function creats img, title, and button that belong to this book 
+  //  this work on storing books belonging to their buttons ⭐️ 
+  result.innerHTML = books.map((book, index) => `
+    <div class="book">
+      <img src="${book.cover}" alt="${book.title}">
+      <h3>${book.title}</h3>
+      <button class="review-btn" data-index="${index}">Review</button>
+    </div>
+  `).join("");//combaines all of this into one string this is used becus map creats array of multipal strings 
+              // and html only accpet one string so join fix this 
+
+  // Add click event for review buttons
+  const buttons = document.querySelectorAll(".review-btn");// buttons is a lis of buttons containin each button belong to this class *.review-btn"* 
+  buttons.forEach(btn => { //looping throuh buttons
+    btn.addEventListener("click", () => { //waits for usser to clic on a button 
+      const book = books[btn.dataset.index];//this work on getting the index number of the button user clicked on 
+      window.location.href = "review.html" + //sendes user to the reviw page 
+        "?cover=" + encodeURIComponent(book.cover) +//Adds book cover to the URL
+        "&title=" + encodeURIComponent(book.title) +
+        "&author=" + encodeURIComponent(book.author) +
+        "&desc=" + encodeURIComponent(book.description);
+    });
+  });
+}
+
+// Function for search
+function searchBook() {
+  const query = searchInput.value.toLowerCase().trim();
+  if (!query) {
+    result.innerHTML = "";
+    return;
+  }
+  //⭐️filter⭐️ keeps only mathing books when serching 
+  //⭐️include⭐️ checkes if title contiens what user typed.  when user search for  ⭐️harry⭐️ Harry Potter whill display as a match
+  const matchedBooks = allBooksArray.filter(book => book.title.toLowerCase().includes(query));//
+  noBooks(matchedBooks);
+}
+
+
+// Event listener, if the user clicks keys, it will go to the function serchbook
+if (searchInput) {
+  searchInput.addEventListener("keyup", searchBook);
+}
+
+
+});
+
+        </script>
+ 
+
+</body>
+</html>

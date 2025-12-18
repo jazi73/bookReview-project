@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Reviewing Website</title>
+    <link rel="stylesheet" type="text/css" href="project.css"> <!--links to css file for styling-->
+   
+
+
+    <style>
+
+
+       body {
+     
+        margin: 0;/* remove defualt marging */
+        padding: 0;/* remove defualt padding */
+        margin-top: 200px; 
+       }
+
+       h2 {
+        color: #3a394c; 
+     }
+
+
+     .genre-container {
+        text-align: center;
+      margin-top: 30px; /* space between heading and container */
+      padding-top: 30px; /* space inside container */
+     }
+
+
+     .genre-item {
+       
+         display: inline-block;    /* align item side by side */
+         background: rgba(89, 80, 80, 0.15);
+         border-radius: 15px; /* rounds corners */
+         padding: 10px; /* space between content and edge */
+         width: 150px;/* fixed with for all cards */
+         margin: 10px;/* space */
+         text-align: center;    
+          }
+
+
+     .genre-item img {
+       
+      width: 130px;
+      height: 140px;
+      border-radius: 10px;
+     }
+
+
+   .genre-item label {
+    cursor: pointer;/*for hand(user appealing)*/
+     display: block; /* labels below imges */
+     color: #3a394c;
+     margin-top: 5px;/* space between imges and labels */
+     }
+     
+     .genre-item input{
+        cursor: pointer;/*for hand(user appealing)*/
+     }
+
+ .genre-buttons {
+  margin-top: 30px;          
+  text-align: center; 
+
+}
+
+.genre-buttons button {
+  background-color: #3a394c;  
+  color: white;             
+  border: none;               
+  border-radius: 8px;         
+  padding: 10px 20px;        
+  margin: 0 10px;                      
+  font-size: 16px;
+ 
+}
+
+.genre-buttons button:hover {
+  background-color: #5a5170;  
+}
+
+a{
+    color: white;
+    text-decoration: none;
+}
+   button{
+    cursor: pointer;
+   }  
+
+   </style>
+</head>
+<body>
+   
+    <div class="genre-container">
+
+        <h2>Pick Your Favorite Genres</h2>
+
+        <section class="genre-item"> 
+            <img src="Fant.jpg" alt="Fantasy">
+            <label><input type="checkbox" name="fan" value="Fantasy"> Fantasy</label>
+        </section>
+
+        <section class="genre-item">
+            <img src="romance.jpg" alt="Romance">
+            <label><input type="checkbox" name="rom" value="Romance"> Romance</label>
+        </section>
+
+        <section class="genre-item">
+            <img src="manga.jpg" alt="Manga">
+            <label><input type="checkbox" name="manga" value="Manga"> Manga</label>
+        </section>
+
+        <section class="genre-item">
+            <img src="mystery.jpg" alt="Mystery">
+            <label><input type="checkbox" name="mys" value="Mystery"> Mystery</label>
+        </section>
+
+        <section class="genre-item">
+            <img src="fiction.jpg" alt="Fiction">
+            <label><input type="checkbox" name="fiction" value="Fiction"> Fiction</label>
+        </section>
+
+        <section class="genre-buttons">
+            <button type="button" onclick="goToNextPage()">Next</button>
+
+        </section>
+
+    </div>
+    <script>
+        // Limit selection to 2 genres
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        
+        checkboxes.forEach(cb => {
+          cb.addEventListener('change', () => {
+            const checked = document.querySelectorAll('input[type="checkbox"]:checked');
+            if (checked.length > 2) {
+              cb.checked = false; // undo the third selection
+              alert("You can only select up to 2 genres!");
+            }
+          });
+        });
+      
+        function goToNextPage() {
+          const checked = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+            .map(cb => cb.value);
+      
+          if (checked.length === 0) {
+            alert("Please select at least one genre!");
+            return;
+          }
+      
+          // Move to next page, passing selected genres in the URL
+          window.location.href = "chosenGenres.html?genres=" + checked.join(",");
+        }
+
+      </script>
+      
+        
+</body>
+</html>

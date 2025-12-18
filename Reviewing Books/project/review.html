@@ -1,0 +1,144 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Book Reviewing Website</title>
+    <link rel="stylesheet" type="text/css" href="project.css"> <!--links to css file for styling-->
+    <meta charset="UTF-8">
+<style>
+
+body {
+   padding: 40px;
+   box-sizing: border-box; /* to prevent growing width */
+   margin-top: 60px;
+}
+
+/* book details section */
+.book-section {
+  margin-bottom: 30px;
+}
+
+.book-cover {
+  width: 120px;
+  height: 160px;
+  background-color: #ddd;
+  display: inline-block; /* to display inline and change width/height */
+  margin-right: 15px;
+}
+
+.book-details {
+  display: inline-block; /* to display inline and change width/height */
+  vertical-align: top;
+}
+
+.book-details p {
+  margin: 5px 0 10px 0; 
+}
+
+/* Star rating section */
+.rating-section {
+  margin-bottom: 30px;
+}
+
+.stars {
+  display: inline; /* to display in one row */
+  direction: rtl; /* makes stars fill from right to left */
+}
+
+.stars input {
+  display: none; /* hide the radio buttons */
+}
+
+.stars label {
+  font-size: 30px;
+  color: #ccc;
+  cursor: pointer; /* hand cursor */
+}
+
+.stars input:checked ~ label {
+  color: gold; /* selected stars turn gold */
+}
+
+/* Review box and button */
+.review-box textarea {
+  width: 100%;
+  height: 200px;
+  font-size: 16px;
+  padding: 10px;
+  border: 2px solid #000;
+}
+
+.review-box button {
+  margin-top: 10px;
+  float: right;
+  padding: 10px 20px;
+  border: 2px solid green;
+  background-color: white;
+  cursor: pointer; /* hand cursor */
+  border-radius: 5px;
+}
+
+.review-box button:hover {
+  background-color: rgb(104, 210, 78);
+} 
+
+</style>
+
+</head>
+
+<body>
+
+    <!-- Book information section -->
+    <section class="book-section">
+        <img id="bookCover" src="" alt="Book cover" class="book-cover">
+
+        <section class="book-details">
+          <p><strong>Title: </strong><span id="bookTitle"></span></p>
+          <p><strong>Author: </strong><span id="bookAuthor"></span></p>
+          <p><strong>Description: </strong><span id="bookDesc"></span></p>
+        </section>
+    </section>
+
+    <!-- Star rating section -->
+    <section class="rating-section">
+        <label>Star Rating:</label>
+        <section class="stars"><!-- star radio buttons -->
+          <input type="radio" name="rating" id="star5" value="5"><label for="star5">★</label>
+          <input type="radio" name="rating" id="star4" value="4"><label for="star4">★</label>
+          <input type="radio" name="rating" id="star3" value="3"><label for="star3">★</label>
+          <input type="radio" name="rating" id="star2" value="2"><label for="star2">★</label>
+          <input type="radio" name="rating" id="star1" value="1"><label for="star1">★</label>
+        </section>
+    </section>
+
+    <!-- Review writing section -->
+    <section class="review-box">
+        <textarea placeholder="Write your review..."></textarea>
+        <button type="submit">Submit Review</button>
+    </section>
+
+    <footer style="margin-top: 190px;">@2025 all copyrights reserved</footer>
+
+    <script>
+        // reads the data sent in the URL from the previous page.
+        const params = new URLSearchParams(window.location.search);
+//params(parameters) holds all the data passed in the URL
+
+        // Insert book data into the page
+        document.getElementById("bookCover").src = params.get("cover");//Gets the value of cover from the URL.
+        document.getElementById("bookTitle").textContent = params.get("title");//and so on....
+        document.getElementById("bookAuthor").textContent = params.get("author");
+        document.getElementById("bookDesc").textContent = params.get("desc");
+
+        const btn = document.querySelector(".review-box button");//select button in class review-box 
+  const textarea = document.querySelector(".review-box textarea");
+
+  btn.onclick = () => {
+    textarea.value = ""; // clears the text after submitting the review
+  };
+    </script>
+
+</body>
+</html>
